@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Version_1_C
 {
-    [Serializable()] 
+    [Serializable()]
     public class clsPainting : clsWork
     {
         private float theWidth;
@@ -20,9 +20,10 @@ namespace Version_1_C
                 paintDialog = new frmPainting();
             }
             paintDialog.SetDetails(_Name, theDate, theValue, theWidth, theHeight, theType);
-            if(paintDialog.ShowDialog() == DialogResult.OK)
+
+            if (paintDialog.ShowDialog() == DialogResult.OK)
             {
-               paintDialog.GetDetails(ref _Name, ref theDate, ref theValue, ref theWidth, ref theHeight, ref theType);
+                paintDialog.GetDetails(ref _Name, ref theDate, ref theValue, ref theWidth, ref theHeight, ref theType);
             }
         }
     }
