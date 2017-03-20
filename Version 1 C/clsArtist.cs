@@ -2,46 +2,47 @@ using System;
 
 namespace Version_1_C
 {
-    [Serializable()] 
+    [Serializable()]
     public class clsArtist
     {
-        private string name;
-        private string speciality;
-        private string phone;
-        
-        private decimal theTotalValue;
+        private string _name;
+        private string _speciality;
+        private string _phone;
 
-        private clsWorksList theWorksList;
-        private clsArtistList theArtistList;
-        
-        private static frmArtist artistDialog = new frmArtist();
+        private decimal _totalValue;
+
+        private clsWorksList _worksList;
+        private clsArtistList _artistList;
+
+        private static frmArtist _artistDialog = new frmArtist();
         private byte sortOrder;
 
         public clsArtist(clsArtistList prArtistList)
         {
-            theWorksList = new clsWorksList();
-            theArtistList = prArtistList;
+            _worksList = new clsWorksList();
+            _artistList = prArtistList;
+
             EditDetails();
         }
-        
+
         public void EditDetails()
         {
-            artistDialog.SetDetails(name, speciality, phone, sortOrder, theWorksList, theArtistList);
-            if (artistDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            _artistDialog.SetDetails(_name, _speciality, _phone, sortOrder, _worksList, _artistList);
+            if (_artistDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                artistDialog.GetDetails(ref name, ref speciality, ref phone, ref sortOrder);
-                theTotalValue = theWorksList.GetTotalValue();
+                _artistDialog.GetDetails(ref _name, ref _speciality, ref _phone, ref sortOrder);
+                _totalValue = _worksList.GetTotalValue();
             }
         }
 
         public string GetKey()
         {
-            return name;
+            return _name;
         }
 
         public decimal GetWorksValue()
         {
-            return theTotalValue;
+            return _totalValue;
         }
     }
 }

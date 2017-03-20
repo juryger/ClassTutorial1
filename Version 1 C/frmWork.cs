@@ -1,16 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Version_1_C
 {
     public partial class frmWork : Form
     {
-
         public frmWork()
         {
             InitializeComponent();
@@ -43,11 +37,11 @@ namespace Version_1_C
             DialogResult = DialogResult.Cancel;
             Close();
         }
-        
+
         public virtual bool isValid()
         {
             return true;
         }
-    
+
     }
 }

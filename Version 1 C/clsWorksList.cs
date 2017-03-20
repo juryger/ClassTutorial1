@@ -4,12 +4,12 @@ using System.Windows.Forms;
 
 namespace Version_1_C
 {
-    [Serializable()] 
+    [Serializable()]
     public class clsWorksList : ArrayList
     {
-        private static clsNameComparer theNameComparer = new clsNameComparer();
-        private static clsDateComparer theDateComparer = new clsDateComparer();
-        
+        private static clsNameComparer _nameComparer = new clsNameComparer();
+        private static clsDateComparer _dateComparer = new clsDateComparer();
+
         public void AddWork()
         {
             clsWork lcWork = clsWork.NewWork();
@@ -18,7 +18,7 @@ namespace Version_1_C
                 Add(lcWork);
             }
         }
-       
+
         public void DeleteWork(int prIndex)
         {
             if (prIndex >= 0 && prIndex < this.Count)
@@ -29,7 +29,7 @@ namespace Version_1_C
                 }
             }
         }
-        
+
         public void EditWork(int prIndex)
         {
             if (prIndex >= 0 && prIndex < this.Count)
@@ -53,14 +53,14 @@ namespace Version_1_C
             return lcTotal;
         }
 
-         public void SortByName()
-         {
-             Sort(theNameComparer);
-         }
-    
+        public void SortByName()
+        {
+            Sort(_nameComparer);
+        }
+
         public void SortByDate()
         {
-            Sort(theDateComparer);
+            Sort(_dateComparer);
         }
     }
 }

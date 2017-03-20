@@ -6,25 +6,25 @@ namespace Version_1_C
     [Serializable()]
     public class clsPhotograph : clsWork
     {
-        private float theWidth;
-        private float theHeight;
-        private string theType;
+        private float _width;
+        private float _height;
+        private string _type;
 
         [NonSerialized()]
-        private static frmPhotograph photoDialog;
+        private static frmPhotograph _photoDialog;
 
         public override void EditDetails()
         {
-            if (photoDialog == null)
+            if (_photoDialog == null)
             {
-                photoDialog = new frmPhotograph();
+                _photoDialog = new frmPhotograph();
             }
 
-            photoDialog.SetDetails(_Name, theDate, theValue, theWidth, theHeight, theType);
+            _photoDialog.SetDetails(_name, _date, _value, _width, _height, _type);
 
-            if (photoDialog.ShowDialog() == DialogResult.OK)
+            if (_photoDialog.ShowDialog() == DialogResult.OK)
             {
-                photoDialog.GetDetails(ref _Name, ref theDate, ref theValue, ref theWidth, ref theHeight, ref theType);
+                _photoDialog.GetDetails(ref _name, ref _date, ref _value, ref _width, ref _height, ref _type);
             }
         }
     }
