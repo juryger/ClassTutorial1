@@ -4,9 +4,11 @@ using System.Windows.Forms;
 
 namespace Version_1_C
 {
-    [Serializable()] 
+    [Serializable()]
     public class clsArtistList : SortedList
     {
+        private const string _fileName = "gallery.xml";
+
         public void EditArtist(string prKey)
         {
             clsArtist lcArtist;
@@ -16,7 +18,7 @@ namespace Version_1_C
             else
                 MessageBox.Show("Sorry no artist by this name");
         }
-       
+
         public void NewArtist()
         {
             clsArtist lcArtist = new clsArtist(this);
@@ -33,7 +35,7 @@ namespace Version_1_C
                 MessageBox.Show("Duplicate Key!");
             }
         }
-        
+
         public decimal GetTotalValue()
         {
             decimal lcTotal = 0;
@@ -42,6 +44,29 @@ namespace Version_1_C
                 lcTotal += lcArtist.GetWorksValue();
             }
             return lcTotal;
+        }
+
+        public static clsArtistList Retrieve()
+        {
+            System.IO.FileStream lcFileStream = new System.IO.FileStream(_fileName, System.IO.FileMode.Open);
+            System.Runtime.Serialization.Formatters.Soap.SoapFormatter lcFormatter =
+                new System.Runtime.Serialization.Formatters.Soap.SoapFormatter();
+
+            var result = new clsArtistList();
+            result = (clsArtistList)lcFormatter.Deserialize(lcFileStream);
+            lcFileStream.Close();
+
+            return result;
+        }
+
+        public void Save()
+        {
+            System.IO.FileStream lcFileStream = new System.IO.FileStream(_fileName, System.IO.FileMode.Create);
+            System.Runtime.Serialization.Formatters.Soap.SoapFormatter lcFormatter =
+                new System.Runtime.Serialization.Formatters.Soap.SoapFormatter();
+
+            lcFormatter.Serialize(lcFileStream, this);
+            lcFileStream.Close();
         }
     }
 }
