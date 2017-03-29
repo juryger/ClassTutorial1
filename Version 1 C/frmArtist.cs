@@ -1,9 +1,5 @@
 using System;
 //using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Version_1_C
@@ -17,12 +13,11 @@ namespace Version_1_C
 
         private clsArtistList theArtistList;
         private clsWorksList theWorksList;
-        private byte sortOrder; // 0 = Name, 1 = Date
 
         private void UpdateDisplay()
         {
             txtName.Enabled = txtName.Text == "";
-            if (sortOrder == 0)
+            if (theWorksList.SortOrder == 0)
             {
                 theWorksList.SortByName();
                 rbByName.Checked = true;
@@ -38,7 +33,7 @@ namespace Version_1_C
             lblTotal.Text = Convert.ToString(theWorksList.GetTotalValue());
         }
 
-        public void SetDetails(string prName, string prSpeciality, string prPhone, byte prSortOrder,
+        public void SetDetails(string prName, string prSpeciality, string prPhone,
                                clsWorksList prWorksList, clsArtistList prArtistList)
         {
             txtName.Text = prName;
@@ -46,16 +41,15 @@ namespace Version_1_C
             txtPhone.Text = prPhone;
             theArtistList = prArtistList;
             theWorksList = prWorksList;
-            sortOrder = prSortOrder;
             UpdateDisplay();
         }
 
-        public void GetDetails(ref string prName, ref string prSpeciality, ref string prPhone, ref byte prSortOrder)
+        public void GetDetails(ref string prName, ref string prSpeciality, ref string prPhone)
         {
             prName = txtName.Text;
             prSpeciality = txtSpeciality.Text;
             prPhone = txtPhone.Text;
-            prSortOrder = sortOrder;
+
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -104,7 +98,7 @@ namespace Version_1_C
 
         private void rbByDate_CheckedChanged(object sender, EventArgs e)
         {
-            sortOrder = Convert.ToByte(rbByDate.Checked);
+            theWorksList.SortOrder = Convert.ToByte(rbByDate.Checked);
             UpdateDisplay();
         }
 

@@ -9,6 +9,20 @@ namespace Version_1_C
     {
         private static clsNameComparer _nameComparer = new clsNameComparer();
         private static clsDateComparer _dateComparer = new clsDateComparer();
+        private byte _sortOrder; // 0 = Name, 1 = Date
+
+        public byte SortOrder
+        {
+            get
+            {
+                return _sortOrder;
+            }
+
+            set
+            {
+                _sortOrder = value;
+            }
+        }
 
         public void AddWork()
         {
