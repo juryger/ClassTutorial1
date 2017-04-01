@@ -16,6 +16,69 @@ namespace Version_1_C
 
         private static frmArtist _artistDialog = new frmArtist();
 
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+
+            set
+            {
+                _name = value;
+            }
+        }
+
+        public string Speciality
+        {
+            get
+            {
+                return _speciality;
+            }
+
+            set
+            {
+                _speciality = value;
+            }
+        }
+
+        public string Phone
+        {
+            get
+            {
+                return _phone;
+            }
+
+            set
+            {
+                _phone = value;
+            }
+        }
+
+        public decimal TotalValue
+        {
+            get
+            {
+                return _totalValue;
+            }
+        }
+
+        public clsWorksList WorksList
+        {
+            get
+            {
+                return _worksList;
+            }
+        }
+
+        public clsArtistList ArtistList
+        {
+            get
+            {
+                return _artistList;
+            }
+        }
+
         public clsArtist(clsArtistList prArtistList)
         {
             _worksList = new clsWorksList();
@@ -26,22 +89,11 @@ namespace Version_1_C
 
         public void EditDetails()
         {
-            _artistDialog.SetDetails(_name, _speciality, _phone, _worksList, _artistList);
+            _artistDialog.SetDetails(this);
             if (_artistDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                _artistDialog.GetDetails(ref _name, ref _speciality, ref _phone);
                 _totalValue = _worksList.GetTotalValue();
             }
-        }
-
-        public string GetKey()
-        {
-            return _name;
-        }
-
-        public decimal GetWorksValue()
-        {
-            return _totalValue;
         }
     }
 }

@@ -11,56 +11,45 @@ namespace Version_1_C
             InitializeComponent();
         }
 
-        private clsArtistList theArtistList;
-        private clsWorksList theWorksList;
+        private clsArtist _artist;
+        private clsArtistList _artistList;
+        private clsWorksList _worksList;
 
         private void UpdateDisplay()
         {
             txtName.Enabled = txtName.Text == "";
-            if (theWorksList.SortOrder == 0)
+            if (_worksList.SortOrder == 0)
             {
-                theWorksList.SortByName();
+                _worksList.SortByName();
                 rbByName.Checked = true;
             }
             else
             {
-                theWorksList.SortByDate();
+                _worksList.SortByDate();
                 rbByDate.Checked = true;
             }
 
             lstWorks.DataSource = null;
-            lstWorks.DataSource = theWorksList;
-            lblTotal.Text = Convert.ToString(theWorksList.GetTotalValue());
+            lstWorks.DataSource = _worksList;
+            lblTotal.Text = Convert.ToString(_worksList.GetTotalValue());
         }
 
-        public void SetDetails(string prName, string prSpeciality, string prPhone,
-                               clsWorksList prWorksList, clsArtistList prArtistList)
+        public void SetDetails(clsArtist pArtist)
         {
-            txtName.Text = prName;
-            txtSpeciality.Text = prSpeciality;
-            txtPhone.Text = prPhone;
-            theArtistList = prArtistList;
-            theWorksList = prWorksList;
+            _artist = pArtist;
+            UpdateForm();
             UpdateDisplay();
-        }
-
-        public void GetDetails(ref string prName, ref string prSpeciality, ref string prPhone)
-        {
-            prName = txtName.Text;
-            prSpeciality = txtSpeciality.Text;
-            prPhone = txtPhone.Text;
-
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            theWorksList.DeleteWork(lstWorks.SelectedIndex);
+            _worksList.DeleteWork(lstWorks.SelectedIndex);
             UpdateDisplay();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            theWorksList.AddWork();
+            _worksList.AddWork();
             UpdateDisplay();
         }
 
@@ -68,6 +57,7 @@ namespace Version_1_C
         {
             if (isValid())
             {
+                PushData();
                 DialogResult = DialogResult.OK;
             }
         }
@@ -75,7 +65,7 @@ namespace Version_1_C
         public virtual Boolean isValid()
         {
             if (txtName.Enabled && txtName.Text != "")
-                if (theArtistList.Contains(txtName.Text))
+                if (_artistList.Contains(txtName.Text))
                 {
                     MessageBox.Show("Artist with that name already exists!");
                     return false;
@@ -91,15 +81,31 @@ namespace Version_1_C
             int lcIndex = lstWorks.SelectedIndex;
             if (lcIndex >= 0)
             {
-                theWorksList.EditWork(lcIndex);
+                _worksList.EditWork(lcIndex);
                 UpdateDisplay();
             }
         }
 
         private void rbByDate_CheckedChanged(object sender, EventArgs e)
         {
-            theWorksList.SortOrder = Convert.ToByte(rbByDate.Checked);
+            _worksList.SortOrder = Convert.ToByte(rbByDate.Checked);
             UpdateDisplay();
+        }
+
+        private void UpdateForm()
+        {
+            txtName.Text = _artist.Name;
+            txtSpeciality.Text = _artist.Speciality;
+            txtPhone.Text = _artist.Phone;
+            _artistList = _artist.ArtistList;
+            _worksList = _artist.WorksList;
+        }
+
+        private void PushData()
+        {
+            _artist.Name = txtName.Text;
+            _artist.Speciality = txtSpeciality.Text;
+            _artist.Phone = txtPhone.Text;
         }
 
     }
