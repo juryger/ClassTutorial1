@@ -5,9 +5,48 @@ namespace Version_1_C
     [Serializable()]
     public abstract class clsWork
     {
-        protected string _name;
-        protected DateTime _date = DateTime.Now;
-        protected decimal _value;
+        private string _name;
+        private DateTime _date = DateTime.Now;
+        private decimal _value;
+
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+
+            set
+            {
+                _name = value;
+            }
+        }
+
+        public DateTime Date
+        {
+            get
+            {
+                return _date;
+            }
+
+            set
+            {
+                _date = value;
+            }
+        }
+
+        public decimal Value
+        {
+            get
+            {
+                return _value;
+            }
+
+            set
+            {
+                this._value = value;
+            }
+        }
 
         public clsWork()
         {
@@ -44,21 +83,6 @@ namespace Version_1_C
         public override string ToString()
         {
             return _name + "\t" + _date.ToShortDateString();
-        }
-
-        public string GetName()
-        {
-            return _name;
-        }
-
-        public DateTime GetDate()
-        {
-            return _date;
-        }
-
-        public decimal GetValue()
-        {
-            return _value;
         }
     }
 }

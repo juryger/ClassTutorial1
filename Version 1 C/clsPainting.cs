@@ -1,5 +1,4 @@
 using System;
-using System.Windows.Forms;
 
 namespace Version_1_C
 {
@@ -13,6 +12,45 @@ namespace Version_1_C
         [NonSerialized()]
         private static frmPainting _paintDialog;
 
+        public float Width
+        {
+            get
+            {
+                return _width;
+            }
+
+            set
+            {
+                _width = value;
+            }
+        }
+
+        public float Height
+        {
+            get
+            {
+                return _height;
+            }
+
+            set
+            {
+                _height = value;
+            }
+        }
+
+        public string Type
+        {
+            get
+            {
+                return _type;
+            }
+
+            set
+            {
+                _type = value;
+            }
+        }
+
         public override void EditDetails()
         {
             if (_paintDialog == null)
@@ -20,12 +58,9 @@ namespace Version_1_C
                 _paintDialog = new frmPainting();
             }
 
-            _paintDialog.SetDetails(_name, _date, _value, _width, _height, _type);
+            _paintDialog.SetDetails(this);
 
-            if (_paintDialog.ShowDialog() == DialogResult.OK)
-            {
-                _paintDialog.GetDetails(ref _name, ref _date, ref _value, ref _width, ref _height, ref _type);
-            }
+            _paintDialog.ShowDialog();
         }
     }
 }

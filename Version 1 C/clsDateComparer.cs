@@ -9,8 +9,8 @@ namespace Version_1_C
         {
             clsWork lcWorkX = (clsWork)x;
             clsWork lcWorkY = (clsWork)y;
-            DateTime lcDateX = lcWorkX.GetDate();
-            DateTime lcDateY = lcWorkY.GetDate();
+            DateTime lcDateX = lcWorkX.Date;
+            DateTime lcDateY = lcWorkY.Date;
 
             return lcDateX.CompareTo(lcDateY);
         }

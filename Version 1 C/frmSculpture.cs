@@ -9,21 +9,24 @@ namespace Version_1_C
             InitializeComponent();
         }
 
-        public virtual void SetDetails(string prName, DateTime prDate, decimal prValue,
-                                       float prWeight, string prMaterial)
+        protected override void UpdateForm()
         {
-            base.SetDetails(prName, prDate, prValue);
-            txtWeight.Text = Convert.ToString(prWeight);
-            txtMaterial.Text = prMaterial;
+            base.UpdateForm();
+
+            var sculpture = (clsSculpture)_work;
+            txtWeight.Text = Convert.ToString(sculpture.Weight);
+            txtMaterial.Text = sculpture.Material;
         }
 
-        public virtual void GetDetails(ref string prName, ref DateTime prDate, ref decimal prValue,
-                                       ref float prWeight, ref string prMaterial)
+        protected override void PushData()
         {
-            base.GetDetails(ref prName, ref prDate, ref prValue);
-            prWeight = Convert.ToSingle(txtWeight.Text);
-            prMaterial = txtMaterial.Text;
+            base.PushData();
+
+            var sculpture = (clsSculpture)_work;
+            sculpture.Weight = Convert.ToSingle(txtWeight.Text);
+            sculpture.Material = txtMaterial.Text;
         }
+
     }
 }
 

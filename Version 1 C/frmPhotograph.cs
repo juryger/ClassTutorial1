@@ -4,28 +4,29 @@ namespace Version_1_C
 {
     public partial class frmPhotograph : Version_1_C.frmWork
     {
-
         public frmPhotograph()
         {
             InitializeComponent();
         }
 
-        public virtual void SetDetails(string prName, DateTime prDate, decimal prValue,
-                                       float prWidth, float prHeight, string prType)
+        protected override void UpdateForm()
         {
-            base.SetDetails(prName, prDate, prValue);
-            txtWidth.Text = Convert.ToString(prWidth);
-            txtHeight.Text = Convert.ToString(prHeight);
-            txtType.Text = prType;
+            base.UpdateForm();
+
+            var photograph = (clsPhotograph)_work;
+            txtWidth.Text = Convert.ToString(photograph.Width);
+            txtHeight.Text = Convert.ToString(photograph.Height);
+            txtType.Text = photograph.Type;
         }
 
-        public virtual void GetDetails(ref string prName, ref DateTime prDate, ref decimal prValue,
-                                       ref float prWidth, ref float prHeight, ref string prType)
+        protected override void PushData()
         {
-            base.GetDetails(ref prName, ref prDate, ref prValue);
-            prWidth = Convert.ToSingle(txtWidth.Text);
-            prHeight = Convert.ToSingle(txtHeight.Text);
-            prType = txtType.Text;
+            base.PushData();
+
+            var photograph = (clsPhotograph)_work;
+            photograph.Width = Convert.ToSingle(txtWidth.Text);
+            photograph.Height = Convert.ToSingle(txtHeight.Text);
+            photograph.Type = txtType.Text;
         }
     }
 }
