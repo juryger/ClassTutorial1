@@ -12,7 +12,6 @@ namespace Version_1_C
         }
 
         private clsArtist _artist;
-        private clsArtistList _artistList;
         private clsWorksList _worksList;
 
         private void UpdateDisplay()
@@ -65,7 +64,7 @@ namespace Version_1_C
         public virtual Boolean isValid()
         {
             if (txtName.Enabled && txtName.Text != "")
-                if (_artistList.Contains(txtName.Text))
+                if (_artist.IsDuplicate(txtName.Text))
                 {
                     MessageBox.Show("Artist with that name already exists!");
                     return false;
@@ -97,7 +96,6 @@ namespace Version_1_C
             txtName.Text = _artist.Name;
             txtSpeciality.Text = _artist.Speciality;
             txtPhone.Text = _artist.Phone;
-            _artistList = _artist.ArtistList;
             _worksList = _artist.WorksList;
         }
 
