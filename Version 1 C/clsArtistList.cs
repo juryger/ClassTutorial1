@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows.Forms;
 
 namespace Version_1_C
 {
@@ -15,26 +14,29 @@ namespace Version_1_C
         {
             var lcArtist = this[prKey];
             if (lcArtist != null)
+            {
                 lcArtist.EditDetails();
-            else
-                MessageBox.Show("Sorry no artist by this name");
+            }
         }
 
-        public void NewArtist()
+        public bool NewArtist(out string errorMsg)
         {
+            errorMsg = string.Empty;
+
             clsArtist lcArtist = new clsArtist(this);
             try
             {
                 if (lcArtist.Name != "")
                 {
                     Add(lcArtist.Name, lcArtist);
-                    MessageBox.Show("Artist added!");
                 }
             }
             catch (Exception)
             {
-                MessageBox.Show("Duplicate Key!");
+                errorMsg = "Duplicate Key!";
             }
+
+            return string.IsNullOrEmpty(errorMsg);
         }
 
         public decimal GetTotalValue()

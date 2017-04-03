@@ -42,13 +42,41 @@ namespace Version_1_C
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            _worksList.DeleteWork(lstWorks.SelectedIndex);
-            UpdateDisplay();
+            if (MessageBox.Show("Are you sure?", "Deleting work", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                _worksList.DeleteWork(lstWorks.SelectedIndex);
+                UpdateDisplay();
+            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            _worksList.AddWork();
+            var inputBox = new InputBox("Enter P for Painting, S for Sculpture and H for Photograph");
+            if (inputBox.ShowDialog() != DialogResult.OK)
+            {
+                inputBox.Close();
+                return;
+            }
+
+            WorkType lcWorkType;
+            var lcReply = Convert.ToChar(inputBox.getAnswer());
+            switch (char.ToUpper(lcReply))
+            {
+                case 'P':
+                    lcWorkType = WorkType.Painting;
+                    break;
+                case 'S':
+                    lcWorkType = WorkType.Sculpture;
+                    break;
+                case 'H':
+                    lcWorkType = WorkType.Photograph;
+                    break;
+                default:
+                    lcWorkType = WorkType.None;
+                    break;
+            }
+
+            _worksList.AddWork(lcWorkType);
             UpdateDisplay();
         }
 
@@ -78,10 +106,14 @@ namespace Version_1_C
         private void lstWorks_DoubleClick(object sender, EventArgs e)
         {
             int lcIndex = lstWorks.SelectedIndex;
-            if (lcIndex >= 0)
+            if (lcIndex >= 0 && lcIndex < _worksList.Count)
             {
                 _worksList.EditWork(lcIndex);
                 UpdateDisplay();
+            }
+            else
+            {
+                MessageBox.Show("Sorry no work selected #" + Convert.ToString(lcIndex));
             }
         }
 

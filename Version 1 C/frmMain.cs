@@ -27,8 +27,16 @@ namespace Version_1_C
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            _theArtistList.NewArtist();
-            UpdateDisplay();
+            var errorMsg = string.Empty;
+            if (_theArtistList.NewArtist(out errorMsg))
+            {
+                MessageBox.Show("Artist added!");
+                UpdateDisplay();
+            }
+            else
+            {
+                MessageBox.Show(errorMsg);
+            }
         }
 
         private void lstArtists_DoubleClick(object sender, EventArgs e)
@@ -38,8 +46,15 @@ namespace Version_1_C
             lcKey = Convert.ToString(lstArtists.SelectedItem);
             if (lcKey != null)
             {
-                _theArtistList.EditArtist(lcKey);
-                UpdateDisplay();
+                if (_theArtistList.ContainsKey(lcKey))
+                {
+                    _theArtistList.EditArtist(lcKey);
+                    UpdateDisplay();
+                }
+                else
+                {
+                    MessageBox.Show("Sorry no artist by this name");
+                }
             }
         }
 

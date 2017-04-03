@@ -55,28 +55,18 @@ namespace Version_1_C
 
         public abstract void EditDetails();
 
-        public static clsWork NewWork()
+        public static clsWork NewWork(WorkType pworkType)
         {
-            char lcReply;
-            InputBox inputBox = new InputBox("Enter P for Painting, S for Sculpture and H for Photograph");
-            //inputBox.ShowDialog();
-            //if (inputBox.getAction() == true)
-            if (inputBox.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            switch (pworkType)
             {
-                lcReply = Convert.ToChar(inputBox.getAnswer());
-
-                switch (char.ToUpper(lcReply))
-                {
-                    case 'P': return new clsPainting();
-                    case 'S': return new clsSculpture();
-                    case 'H': return new clsPhotograph();
-                    default: return null;
-                }
-            }
-            else
-            {
-                inputBox.Close();
-                return null;
+                case WorkType.Painting:
+                    return new clsPainting();
+                case WorkType.Sculpture:
+                    return new clsSculpture();
+                case WorkType.Photograph:
+                    return new clsPhotograph();
+                default:
+                    return null;
             }
         }
 
