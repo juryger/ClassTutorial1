@@ -2,9 +2,19 @@ using System;
 
 namespace Version_1_C
 {
-    public partial class frmSculpture : Version_1_C.frmWork
+    public sealed partial class frmSculpture : Version_1_C.frmWork
     {
-        public frmSculpture()
+        private static readonly frmSculpture _instance = new frmSculpture();
+
+        public static frmSculpture Instance
+        {
+            get
+            {
+                return _instance;
+            }
+        }
+
+        private frmSculpture()
         {
             InitializeComponent();
         }

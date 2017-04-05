@@ -2,8 +2,22 @@ using System.Collections.Generic;
 
 namespace Version_1_C
 {
-    class clsNameComparer : IComparer<clsWork>
+    public sealed class clsNameComparer : IComparer<clsWork>
     {
+        private static readonly clsNameComparer _instance = new clsNameComparer();
+
+        private clsNameComparer()
+        {
+        }
+
+        public static clsNameComparer Instance
+        {
+            get
+            {
+                return _instance;
+            }
+        }
+
         public int Compare(clsWork x, clsWork y)
         {
             string lcNameX = x.Name;

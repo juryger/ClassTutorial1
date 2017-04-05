@@ -2,9 +2,19 @@ using System;
 
 namespace Version_1_C
 {
-    public partial class frmPhotograph : Version_1_C.frmWork
+    public sealed partial class frmPhotograph : Version_1_C.frmWork
     {
-        public frmPhotograph()
+        private static readonly frmPhotograph _instance = new frmPhotograph();
+
+        public static frmPhotograph Instance
+        {
+            get
+            {
+                return _instance;
+            }
+        }
+
+        private frmPhotograph()
         {
             InitializeComponent();
         }

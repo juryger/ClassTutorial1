@@ -2,9 +2,19 @@ using System;
 
 namespace Version_1_C
 {
-    public partial class frmPainting : Version_1_C.frmWork
+    public sealed partial class frmPainting : Version_1_C.frmWork
     {
-        public frmPainting()
+        private static readonly frmPainting _instance = new frmPainting();
+
+        public static frmPainting Instance
+        {
+            get
+            {
+                return _instance;
+            }
+        }
+
+        private frmPainting()
         {
             InitializeComponent();
         }

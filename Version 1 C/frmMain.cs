@@ -3,17 +3,27 @@ using System.Windows.Forms;
 
 namespace Version_1_C
 {
-    public partial class frmMain : Form
+    public sealed partial class frmMain : Form
     {
+        private readonly static frmMain _instance = new frmMain();
+
         /// <summary>
         /// Matthias Otto, NMIT, 2010-2016
         /// </summary>
-        public frmMain()
+        private frmMain()
         {
             InitializeComponent();
         }
 
         private clsArtistList _theArtistList = new clsArtistList();
+
+        public static frmMain Instance
+        {
+            get
+            {
+                return _instance;
+            }
+        }
 
         private void UpdateDisplay()
         {
