@@ -9,6 +9,9 @@ namespace Version_1_C
         private float _height;
         private string _type;
 
+        public delegate void LoadPaintingFormDelegate(clsPainting prPainting);
+        public static LoadPaintingFormDelegate LoadPaintingForm;
+
         public float Width
         {
             get
@@ -50,9 +53,7 @@ namespace Version_1_C
 
         public override void EditDetails()
         {
-            frmPainting.Instance.SetDetails(this);
-
-            frmPainting.Instance.ShowDialog();
+            LoadPaintingForm(this);
         }
     }
 }

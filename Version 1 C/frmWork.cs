@@ -52,5 +52,10 @@ namespace Version_1_C
             _work.Value = Convert.ToDecimal(txtValue.Text);
         }
 
+        public virtual void Run(clsWork pWork)
+        {
+            SetDetails(pWork);
+            ShowDialog();
+        }
     }
 }

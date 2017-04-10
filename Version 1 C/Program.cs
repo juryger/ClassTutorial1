@@ -13,6 +13,9 @@ namespace Version_1_C
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            clsPainting.LoadPaintingForm = new clsPainting.LoadPaintingFormDelegate(frmPainting.Instance.Run);
+
             Application.Run(frmMain.Instance);
         }
     }
