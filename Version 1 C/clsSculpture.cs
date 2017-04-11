@@ -8,6 +8,8 @@ namespace Version_1_C
         private float _weight;
         private string _material;
 
+        public static LoadWorkFormDelegate LoadSculptureForm;
+
         public float Weight
         {
             get
@@ -36,9 +38,7 @@ namespace Version_1_C
 
         public override void EditDetails()
         {
-            frmSculpture.Instance.SetDetails(this);
-
-            frmSculpture.Instance.ShowDialog();
+            LoadSculptureForm(this);
         }
     }
 }

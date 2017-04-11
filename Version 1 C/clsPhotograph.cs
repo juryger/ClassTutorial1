@@ -9,6 +9,8 @@ namespace Version_1_C
         private float _height;
         private string _type;
 
+        public static LoadWorkFormDelegate LoadPhotographForm;
+
         public float Width
         {
             get
@@ -50,9 +52,7 @@ namespace Version_1_C
 
         public override void EditDetails()
         {
-            frmPhotograph.Instance.SetDetails(this);
-
-            frmPhotograph.Instance.ShowDialog();
+            LoadPhotographForm(this);
         }
     }
 }

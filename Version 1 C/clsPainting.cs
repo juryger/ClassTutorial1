@@ -9,8 +9,7 @@ namespace Version_1_C
         private float _height;
         private string _type;
 
-        public delegate void LoadPaintingFormDelegate(clsPainting prPainting);
-        public static LoadPaintingFormDelegate LoadPaintingForm;
+        public static LoadWorkFormDelegate LoadPaintingForm;
 
         public float Width
         {
