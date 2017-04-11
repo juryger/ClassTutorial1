@@ -1,4 +1,5 @@
 using System;
+using Version_1_C.Delegates;
 
 namespace Version_1_C
 {
@@ -9,12 +10,31 @@ namespace Version_1_C
         private string _speciality;
         private string _phone;
 
-        private decimal _totalValue;
-
         private clsWorksList _worksList;
-        private clsArtistList _artistList;
 
-        private static frmArtist _artistDialog = new frmArtist();
+        private frmArtist _artistDialog;
+
+        public clsArtist()
+        {
+            _worksList = new clsWorksList();
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="pIsDuplicateArtist">ref to function which checks on dublicate artists by name</param>
+        /// <param name="pFinishArtistEditing">ref to function which will be called when artist editing finish</param>
+        public clsArtist(IsDuplicateArtistDelegate pIsDuplicateArtist, FinishArtistEditingDelegate pFinishArtistEditing) : this()
+        {
+            _artistDialog = new frmArtist(pIsDuplicateArtist, pFinishArtistEditing);
+
+            EditDetails();
+        }
+
+        public void InitArtistAfterDeserialization(IsDuplicateArtistDelegate pIsDuplicateArtist, FinishArtistEditingDelegate pFinishArtistEditing)
+        {
+            _artistDialog = new frmArtist(pIsDuplicateArtist, pFinishArtistEditing);
+        }
 
         public string Name
         {
@@ -59,7 +79,7 @@ namespace Version_1_C
         {
             get
             {
-                return _totalValue;
+                return _worksList.GetTotalValue();
             }
         }
 
@@ -71,34 +91,11 @@ namespace Version_1_C
             }
         }
 
-        public clsArtistList ArtistList
-        {
-            get
-            {
-                return _artistList;
-            }
-        }
-
-        public clsArtist(clsArtistList prArtistList)
-        {
-            _worksList = new clsWorksList();
-            _artistList = prArtistList;
-
-            EditDetails();
-        }
-
         public void EditDetails()
         {
             _artistDialog.SetDetails(this);
-            if (_artistDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                _totalValue = _worksList.GetTotalValue();
-            }
-        }
-
-        public bool IsDuplicate(string prArtistName)
-        {
-            return _artistList.ContainsKey(prArtistName);
+            _artistDialog.Show();
+            _artistDialog.Activate();
         }
     }
 }

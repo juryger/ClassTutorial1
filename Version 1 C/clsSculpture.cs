@@ -1,4 +1,5 @@
 using System;
+using Version_1_C.Delegates;
 
 namespace Version_1_C
 {

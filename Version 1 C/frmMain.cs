@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using Version_1_C.Delegates;
 
 namespace Version_1_C
 {
@@ -7,15 +8,26 @@ namespace Version_1_C
     {
         private readonly static frmMain _instance = new frmMain();
 
+        public event Notify GalleryNameChanged;
+
         /// <summary>
         /// Matthias Otto, NMIT, 2010-2016
         /// </summary>
         private frmMain()
         {
             InitializeComponent();
+
+            _artistList =
+                new clsArtistList(new Delegates.MainFormUpdateDelegate(UpdateDisplay));
         }
 
-        private clsArtistList _theArtistList = new clsArtistList();
+        private void updateTitle(string prGalleryName)
+        {
+            if (!string.IsNullOrEmpty(prGalleryName))
+                Text = "Gallery - " + prGalleryName;
+        }
+
+        private clsArtistList _artistList;
 
         public static frmMain Instance
         {
@@ -27,26 +39,17 @@ namespace Version_1_C
 
         private void UpdateDisplay()
         {
-            string[] lcDisplayList = new string[_theArtistList.Count];
+            string[] lcDisplayList = new string[_artistList.Count];
 
             lstArtists.DataSource = null;
-            _theArtistList.Keys.CopyTo(lcDisplayList, 0);
+            _artistList.Keys.CopyTo(lcDisplayList, 0);
             lstArtists.DataSource = lcDisplayList;
-            lblValue.Text = Convert.ToString(_theArtistList.GetTotalValue());
+            lblValue.Text = Convert.ToString(_artistList.GetTotalValue());
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            var errorMsg = string.Empty;
-            if (_theArtistList.NewArtist(out errorMsg))
-            {
-                MessageBox.Show("Artist added!");
-                UpdateDisplay();
-            }
-            else
-            {
-                MessageBox.Show(errorMsg);
-            }
+            _artistList.NewArtist();
         }
 
         private void lstArtists_DoubleClick(object sender, EventArgs e)
@@ -56,9 +59,9 @@ namespace Version_1_C
             lcKey = Convert.ToString(lstArtists.SelectedItem);
             if (lcKey != null)
             {
-                if (_theArtistList.ContainsKey(lcKey))
+                if (_artistList.ContainsKey(lcKey))
                 {
-                    _theArtistList.EditArtist(lcKey);
+                    _artistList.EditArtist(lcKey);
                     UpdateDisplay();
                 }
                 else
@@ -82,7 +85,7 @@ namespace Version_1_C
             if (lcKey != null)
             {
                 lstArtists.ClearSelected();
-                _theArtistList.Remove(lcKey);
+                _artistList.Remove(lcKey);
                 UpdateDisplay();
             }
         }
@@ -91,7 +94,7 @@ namespace Version_1_C
         {
             try
             {
-                _theArtistList.Save();
+                _artistList.Save();
             }
             catch (Exception e)
             {
@@ -99,12 +102,11 @@ namespace Version_1_C
             }
         }
 
-
         private void Retrieve()
         {
             try
             {
-                _theArtistList = clsArtistList.Retrieve();
+                _artistList = clsArtistList.Retrieve(new Delegates.MainFormUpdateDelegate(UpdateDisplay));
             }
             catch (Exception e)
             {
@@ -116,6 +118,9 @@ namespace Version_1_C
         {
             Retrieve();
             UpdateDisplay();
+
+            GalleryNameChanged = new Notify(updateTitle);
+            GalleryNameChanged("Test title.");
         }
     }
 }

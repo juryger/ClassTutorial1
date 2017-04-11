@@ -57,7 +57,7 @@
     <Compile Include="clsWork.cs" />
     <Compile Include="clsWorksList.cs" />
     <!-- To fix Form Designer problem, copy and paste from here -->
-    <Compile Include="Exceptions\FileStoreAccessException.cs" />
+    <Compile Include="Delegates\Delegates.cs" />
     <Compile Include="frmArtist.cs">
       <SubType>Form</SubType>
     </Compile>

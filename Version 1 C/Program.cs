@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using Version_1_C.Delegates;
 
 namespace Version_1_C
 {
@@ -14,9 +15,9 @@ namespace Version_1_C
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            clsPainting.LoadPaintingForm = new clsWork.LoadWorkFormDelegate(frmPainting.Instance.Run);
-            clsPhotograph.LoadPhotographForm = new clsWork.LoadWorkFormDelegate(frmPhotograph.Instance.Run);
-            clsSculpture.LoadSculptureForm = new clsWork.LoadWorkFormDelegate(frmSculpture.Instance.Run);
+            clsPainting.LoadPaintingForm = new LoadWorkFormDelegate(frmPainting.Instance.Run);
+            clsPhotograph.LoadPhotographForm = new LoadWorkFormDelegate(frmPhotograph.Instance.Run);
+            clsSculpture.LoadSculptureForm = new LoadWorkFormDelegate(frmSculpture.Instance.Run);
 
             Application.Run(frmMain.Instance);
         }

@@ -199,7 +199,7 @@ namespace Version_1_C
             this.Controls.Add(this.Label1);
             this.Name = "frmArtist";
             this.Text = "frmArtist";
-            //this.Load += new System.EventHandler(this.frmArtist_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmArtist_FormClosing);
             this.optSort.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

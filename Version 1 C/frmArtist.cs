@@ -1,6 +1,7 @@
 using System;
 //using System.Collections;
 using System.Windows.Forms;
+using Version_1_C.Delegates;
 
 namespace Version_1_C
 {
@@ -8,15 +9,35 @@ namespace Version_1_C
     {
         public frmArtist()
         {
+
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public frmArtist(IsDuplicateArtistDelegate pIsDuplicateArtist, FinishArtistEditingDelegate pFinishArtistEditing)
+        {
+            if (pIsDuplicateArtist == null)
+                throw new ArgumentNullException(nameof(pIsDuplicateArtist));
+
+            if (pFinishArtistEditing == null)
+                throw new ArgumentNullException(nameof(pFinishArtistEditing));
+
+            _isDuplicate = pIsDuplicateArtist;
+            _finishArtistEditing = pFinishArtistEditing;
+
             InitializeComponent();
         }
+
+        private FinishArtistEditingDelegate _finishArtistEditing;
+        private IsDuplicateArtistDelegate _isDuplicate;
 
         private clsArtist _artist;
         private clsWorksList _worksList;
 
         private void UpdateDisplay()
         {
-            txtName.Enabled = txtName.Text == "";
+            txtName.Enabled = string.IsNullOrEmpty(_artist.Name); ;
             if (_worksList.SortOrder == 0)
             {
                 _worksList.SortByName();
@@ -82,17 +103,38 @@ namespace Version_1_C
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            if (isValid())
+            if (!isValid())
+                return;
+            try
             {
                 PushData();
-                DialogResult = DialogResult.OK;
+
+                var isInsert = false;
+
+                if (txtName.Text != "")
+                {
+                    if (txtName.Enabled)
+                    {
+                        isInsert = true;
+                        MessageBox.Show("Artist added!", "Susscess");
+                        txtName.Enabled = false;
+                    }
+
+                    _finishArtistEditing(_artist, isInsert);
+                }
+
+                Hide();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
         public virtual Boolean isValid()
         {
             if (txtName.Enabled && txtName.Text != "")
-                if (_artist.IsDuplicate(txtName.Text))
+                if (_isDuplicate(txtName.Text))
                 {
                     MessageBox.Show("Artist with that name already exists!");
                     return false;
@@ -138,5 +180,10 @@ namespace Version_1_C
             _artist.Phone = txtPhone.Text;
         }
 
+        private void frmArtist_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            btnClose_Click(sender, e);
+        }
     }
 }

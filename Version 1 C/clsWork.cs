@@ -9,8 +9,6 @@ namespace Version_1_C
         private DateTime _date = DateTime.Now;
         private decimal _value;
 
-        public delegate void LoadWorkFormDelegate(clsWork prWork);
-
         public string Name
         {
             get
