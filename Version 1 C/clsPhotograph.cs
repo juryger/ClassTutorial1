@@ -10,6 +10,7 @@ namespace Version_1_C
         private float _height;
         private string _type;
 
+        [field: NonSerializedAttribute()]
         public static LoadWorkFormDelegate LoadPhotographForm;
 
         public float Width

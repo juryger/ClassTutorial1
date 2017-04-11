@@ -9,6 +9,7 @@ namespace Version_1_C
         private float _weight;
         private string _material;
 
+        [field: NonSerializedAttribute()]
         public static LoadWorkFormDelegate LoadSculptureForm;
 
         public float Weight

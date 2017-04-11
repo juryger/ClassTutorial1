@@ -10,8 +10,10 @@ namespace Version_1_C
     public class clsArtistList : SortedList<string, clsArtist>
     {
         private const string _fileName = "gallery.bin";
-        private MainFormUpdateDelegate _mainFormUpdate;
         private string _galleryName;
+
+        [field: NonSerializedAttribute()]
+        private MainFormUpdateDelegate _mainFormUpdate;
 
         public string GalleryName
         {

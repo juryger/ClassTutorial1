@@ -8,6 +8,7 @@ namespace Version_1_C
     {
         private readonly static frmMain _instance = new frmMain();
 
+        [field: NonSerializedAttribute()]
         public event Notify GalleryNameChanged;
 
         /// <summary>
@@ -18,7 +19,7 @@ namespace Version_1_C
             InitializeComponent();
 
             _artistList =
-                new clsArtistList(new Delegates.MainFormUpdateDelegate(UpdateDisplay));
+                new clsArtistList(new MainFormUpdateDelegate(UpdateDisplay));
         }
 
         private void updateTitle(string prGalleryName)
@@ -106,7 +107,7 @@ namespace Version_1_C
         {
             try
             {
-                _artistList = clsArtistList.Retrieve(new Delegates.MainFormUpdateDelegate(UpdateDisplay));
+                _artistList = clsArtistList.Retrieve(new MainFormUpdateDelegate(UpdateDisplay));
             }
             catch (Exception e)
             {

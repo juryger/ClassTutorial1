@@ -7,11 +7,6 @@ namespace Version_1_C
 {
     public partial class frmArtist : Form
     {
-        public frmArtist()
-        {
-
-        }
-
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -29,7 +24,9 @@ namespace Version_1_C
             InitializeComponent();
         }
 
+        [NonSerializedAttribute()]
         private FinishArtistEditingDelegate _finishArtistEditing;
+        [NonSerializedAttribute()]
         private IsDuplicateArtistDelegate _isDuplicate;
 
         private clsArtist _artist;
